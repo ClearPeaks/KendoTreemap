@@ -1,0 +1,714 @@
+<html>
+
+
+0 - //------ KENDO SOURCES ------\\
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Kendo UI Snippet</title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.3.913/styles/kendo.default-v2.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2022.3.913/js/kendo.all.min.js"></script>
+</head>
+
+1 - //------ CONTENT ------\\
+
+<body>
+
+
+1.1 - //------ COLOR SELECTOR TO HIGHLIGHT SPECIFIC DATA IN A CHART ------\\
+
+    <div class="configurator">
+      <div class="header">Configurator</div>
+      <div class="box-col">
+          <h4>USA population by state capital city</h4>
+          <ul class="options">
+              <li>
+            <form>
+                  Select your favorite city:
+                  <select id="myList" onchange="CityFunction()">
+                    <option></option>
+                  <option>Anaheim</option>
+                  <option>Anchorage</option>
+                  <option>Arvada</option>
+                  <option>Auburn</option>
+                  <option>Aurora</option>
+                  <option>Badger</option>
+                  <option>Bakersfield</option>
+                  <option>Bentonville</option>
+                  <option>Birmingham</option>
+                  <option>Boulder</option>
+                  <option>Bridgeport</option>
+                  <option>Bristol</option>
+               <option>Centennial</option>
+               <option>Chandler</option>
+               <option>College</option>
+               <option>Colorado Springs</option>
+               <option>Conway</option>
+               <option>Danbury</option>
+               <option>Decatur</option>
+               <option>Denver</option>
+               <option>Dothan</option>
+               <option>Fairbanks</option>
+               <option>Fayetteville</option>
+               <option>Fort Collins</option>
+               <option>Fort Smith</option>
+               <option>Fresno</option>
+               <option>Gilbert</option>
+               <option>Glendale</option>
+               <option>Hartford</option>
+               <option>Highlands Ranch</option>
+               <option>Hoover</option>
+               <option>Huntsville</option>
+               <option>Jonesboro</option>
+               <option>Juneau</option>
+               <option>Ketchikan</option>
+               <option>Lakewood</option>
+               <option>Little Rock</option>
+               <option>Long Beach</option>
+               <option>Los Angeles</option>
+               <option>Meriden</option>
+               <option>Mesa</option>
+               <option>Mobile</option>
+               <option>Montgomery</option>
+               <option>New Britain</option>
+               <option>New Haven</option>
+               <option>North Little Rock</option>
+               <option>Norwalk</option>
+               <option>Oakland</option>
+               <option>Peoria</option>
+               <option>Phoenix</option>
+               <option>Pine Bluff</option>
+               <option>Population in USA</option>
+               <option>Pueblo</option>
+               <option>Rogers</option>
+               <option>Sacramento</option>
+               <option>San Diego</option>
+               <option>San Francisco</option>
+               <option>San Jose</option>
+               <option>Santa Ana</option>
+               <option>Scottsdale</option>
+               <option>Sitka</option>
+               <option>Springdale</option>
+               <option>Stamford</option>
+               <option>Surprise</option>
+               <option>Tempe</option>
+               <option>Thornton</option>
+               <option>Tucson</option>
+               <option>Tuscaloosa</option>
+               <option>Waterbury</option>
+               <option>West Hartford</option>
+               <option>Westminster</option>
+            </select>
+            <label for="colorselected">Color:</label>
+            <input type="color" id="colorselected">
+            </form>
+  
+</li>
+          </ul>
+      </div>
+      <div id="treemap" style="height: 600px; font-size: 12px;"></div>
+          
+  </div>
+    <script>
+var colorbydefault = '#000000';
+var colorselected;
+window.addEventListener("load", startup, false);
+function startup() {
+   colorselected = document.querySelector("#colorselected");
+   colorselected.value = colorbydefault;
+   colorselected.addEventListener("change", actualizarTodo, false);
+   console.log("----startup----");
+   console.log(colorselected)
+}
+colorsquare = ''
+function actualizarTodo(event) {
+   window.colorselected = event.target.value;
+   createdatest();  
+   createTreemap();
+   console.log("----actualizartodo----");
+   
+}
+var index = Math.round(9 * Math.random());
+var nameselected = document.getElementById("myList");
+
+
+//----RANDOM COLORS FOR THE REST OF THE CITIES ACCORDING TO OUR BRAND'S PALETTE GUIDELINE----
+
+const colorPalette = [
+  "#E8FFFF", // Light Cyan
+  "#D1F0F2", // Pale Cyan
+  "#BBE2E5", // Powder Blue
+  "#A4D4D8", // Sky Blue
+  "#8DD7DB", // Light Aqua
+  "#00afb1", // Your selected color
+  "#00A4A6", // Aquamarine
+  "#00999B", // Turquoise
+  "#008A8C", // Deep Teal
+  "#007B7D"  // Dark Cyan
+];
+var colorTextPalette = [
+   "black", 
+   "black", 
+   "black", 
+   "black", 
+   "black", 
+   "white",
+   "white", 
+   "white",
+   "white", 
+   "white"]; //10 colors
+var citieslenght = 0
+
+
+
+a. - // ----FOR EACH CITY WE ASK IF CITY IS EQUAL TO THE SELECTED ONE-----
+
+
+var datatest = [];
+function createdatest() {
+   window.datatest =    [
+   {
+      "name":"Population in USA",
+      "value":316128839,
+      "items":[
+         {
+            "name":"Alabama",
+            "value":4833722,
+            "items":[
+               {
+                  "name":"Birmingham",
+                  "value":212113,
+                  "color": "Birmingham" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Montgomery",
+                  "value":201332,
+                  "color": "Montgomery" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Mobile",
+                  "value":194899,
+                  "color": "Mobile" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Huntsville",
+                  "value":186254,
+                  "color": "Huntsville" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Tuscaloosa",
+                  "value":95334,
+                  "color": "Tuscaloosa" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Hoover",
+                  "value":84126,
+                  "color": "Hoover" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Dothan",
+                  "value":68001,
+                  "color": "Dothan" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Auburn",
+                  "value":58582,
+                  "color": "Auburn" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Decatur",
+                  "value":55816,
+                  "color": "Decatur" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               }
+            ]
+         },
+         {
+            "name":"Alaska",
+            "value":735132,
+            "items":[
+               {
+                  "name":"Anchorage",
+                  "value":300950,
+                  "color": "Anchorage" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Badger",
+                  "value":20200,
+                  "color": "Badger" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"College",
+                  "value":13400,
+                  "color": "College" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Fairbanks",
+                  "value":32324,
+                  "color": "Fairbanks" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Juneau",
+                  "value":32660,
+                  "color": "Juneau" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Ketchikan",
+                  "value":8214,
+                  "color": "Ketchikan" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Sitka",
+                  "value":9020,
+                  "color": "Sitka" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               }
+            ]
+         },
+         {
+            "name":"Arizona",
+            "value":6626624,
+            "items":[
+               {
+                  "name":"Phoenix",
+                  "value":1513367,
+                  "color": "Phoenix" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Tucson",
+                  "value":526116,
+                  "color": "Tucson" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Mesa",
+                  "value":457587,
+                  "color": "Mesa" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Chandler",
+                  "value":249146,
+                  "color": "Chandler" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Glendale",
+                  "value":234632,
+                  "color": "Glendale" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Gilbert",
+                  "value":229972,
+                  "color": "Gilbert" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Scottsdale",
+                  "value":226918,
+                  "color": "Scottsdale" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Tempe",
+                  "value":168228,
+                  "color": "Tempe" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Peoria",
+                  "value":162592,
+                  "color": "Peoria" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Surprise",
+                  "value":123546,
+                  "color": "Surprise" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               }
+            ]
+         },
+         {
+            "name":"Arkansas",
+            "value":2959373,
+            "items":[
+               {
+                  "name":"Little Rock",
+                  "value":197357,
+                  "color": "Little Rock" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Fort Smith",
+                  "value":87650,
+                  "color": "Fort Smith" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Fayetteville",
+                  "value":78960,
+                  "color": "Fayetteville" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Springdale",
+                  "value":75229,
+                  "color": "Springdale" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Jonesboro",
+                  "value":71551,
+                  "color": "Jonesboro" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"North Little Rock",
+                  "value":66075,
+                  "color": "North Little Rock" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Conway",
+                  "value":63816,
+                  "color": "Conway" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Rogers",
+                  "value":60112,
+                  "color": "Rogers" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Pine Bluff",
+                  "value":46094,
+                  "color": "Pine Bluff" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Bentonville",
+                  "value":40167,
+                  "color": "Bentonville" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               }
+            ]
+         },
+         {
+            "name":"California",
+            "value":38332521,
+            "items":[
+               {
+                  "name":"Los Angeles",
+                  "value":3884307,
+                  "color": "Los Angeles" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"San Diego",
+                  "value":1355896,
+                  "color": "San Diego" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"San Jose",
+                  "value":998537,
+                  "color": "San Jose" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"San Francisco",
+                  "value":837442,
+                  "color": "San Francisco" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Fresno",
+                  "value":509924,
+                  "color": "Fresno" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Sacramento",
+                  "value":479686,
+                  "color": "Sacramento" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Long Beach",
+                  "value":469428,
+                  "color": "Long Beach" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Oakland",
+                  "value":406253,
+                  "color": "Oakland" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Bakersfield",
+                  "value":363630,
+                  "color": "Bakersfield" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Anaheim",
+                  "value":345012,
+                  "color": "Anaheim" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Santa Ana",
+                  "value":334227,
+                  "color": "Santa Ana" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               }
+            ]
+         },
+         {
+            "name":"Colorado",
+            "value":5268367,
+            "items":[
+               {
+                  "name":"Denver",
+                  "value":649495,
+                  "color": "Denver" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Colorado Springs",
+                  "value":439886,
+                  "color": "Colorado Springs" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Aurora",
+                  "value":345803,
+                  "color": "Aurora" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Fort Collins",
+                  "value":152061,
+                  "color": "Fort Collins" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Lakewood",
+                  "value":147214,
+                  "color": "Lakewood" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Thornton",
+                  "value":127359,
+                  "color": "Thornton" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Arvada",
+                  "value":111707,
+                  "color": "Arvada" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Westminster",
+                  "value":110945,
+                  "color": "Westminster" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Pueblo",
+                  "value":108249,
+                  "color": "Pueblo" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Centennial",
+                  "value":106114,
+                  "color": "Centennial" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Boulder",
+                  "value":103166,
+                  "color": "Boulder" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Highlands Ranch",
+                  "value":102000,
+                  "color": "Highlands Ranch" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               }
+            ]
+         },
+         {
+            "name":"Connecticut",
+            "value":3596080,
+            "items":[
+               {
+                  "name":"Bridgeport",
+                  "value":147216,
+                  "color": "Bridgeport" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"New Haven",
+                  "value":130660,
+                  "color": "New Haven" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Stamford",
+                  "value":126456,
+                  "color": "Stamford" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Hartford",
+                  "value":125017,
+                  "color": "Hartford" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Waterbury",
+                  "value":109676,
+                  "color": "Waterbury" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Norwalk",
+                  "value":87776,
+                  "color": "Norwalk" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Danbury",
+                  "value":83684,
+                  "color": "Danbury" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"New Britain",
+                  "value":72939,
+                  "color":"New Britain" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"West Hartford",
+                  "value":63371,
+                  "color": "West Hartford" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Bristol",
+                  "value":60568,
+                  "color": "Bristol" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[Math.round(9 * Math.random())]
+               },
+               {
+                  "name":"Meriden",
+                  "value":60456,
+                  "color": "Meriden" === nameselected.value ? colorselected : colorPalette[Math.round(9 * Math.random())],
+                  "ColorText": colorTextPalette[index]
+               }
+            ]
+         }
+      ]
+   }
+];
+}
+createdatest();
+function CityFunction() {
+   window.colorselected = document.getElementById("colorselected").value
+   window.nameselected = document.getElementById("myList");
+   createdatest();  
+   createTreemap();
+}
+
+
+b. - //------ FUNCTIONS TO SELECT (WHITE OR BLACK) THE TOOLTIP TEXT COLOR RELATED TO THE BACKGROUND ---------\\
+
+function getRGB(c) {
+  return parseInt(c, 16) || c
+}
+function getsRGB(c) {
+  return getRGB(c) / 255 <= 0.03928
+    ? getRGB(c) / 255 / 12.92
+    : Math.pow((getRGB(c) / 255 + 0.055) / 1.055, 2.4)
+}
+function getLuminance(hexaColor) {
+  return (
+    0.2126 * getsRGB(hexaColor.substr(1, 2)) +
+    0.7152 * getsRGB(hexaColor.substr(3, 2)) +
+    0.0722 * getsRGB(hexaColor.substr(-2))
+  )
+}
+function getContrast(f, b) {
+  const L1 = getLuminance(f)
+  const L2 = getLuminance(b)
+  return (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05)
+}
+function getTextColor(color) {
+  const whiteContrast = getContrast(color, '#ffffff')
+  const blackContrast = getContrast(color, '#000000')
+  return whiteContrast > blackContrast ? '#ffffff' : '#000000'
+}
+
+
+c. - //------ CREATE TREEMAP & TOOLTIP ---------\\
+
+
+function createTreemap() {
+      $("#treemap").kendoTreeMap({
+        dataSource: new kendo.data.HierarchicalDataSource({
+            data: datatest,
+          schema: {
+            model: {
+              children: "items"
+            }
+          }
+        }),
+        valueField: "value",
+        textField: "name",
+        colorField: "color"
+      });
+      $("#treemap").kendoTooltip({
+        filter: ".k-leaf,.k-treemap-title",
+        position: "top",
+        autoHide: true,
+        content: function (e) {
+          var treemap = $("#treemap").data("kendoTreeMap");
+          var item = treemap.dataItem(e.target.closest(".k-treemap-tile"));
+          var textColore = getTextColor(item.color)
+            $('.k-tooltip-content').parent().css("background-color",item.color);
+            $('.k-tooltip-content').css("color",textColore);
+            $('.k-callout-s').css("border-top-color",item.color);
+          return item.name + ": " + item.value;
+        }
+      })
+   };
+   createTreemap();
+    </script>
+</body>
+</html>
